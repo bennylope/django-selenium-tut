@@ -8,9 +8,6 @@ class MySeleniumTests(LiveServerTestCase):
 
     @classmethod
     def setUpClass(cls):
-        """
-        Specify the in-browser testing tool
-        """
         cls.selenium = WebDriver()
         super(MySeleniumTests, cls).setUpClass()
 
@@ -19,10 +16,18 @@ class MySeleniumTests(LiveServerTestCase):
         super(MySeleniumTests, cls).tearDownClass()
         cls.selenium.quit()
 
-    def test_login(self):
+    def test_form(self):
         self.selenium.get('%s%s' % (self.live_server_url, '/'))
-        name_input = self.selenium.find_element_by_name("name")
-        #name_input = self.selenium.find_element(by=By.ID, value="id_name")
-        name_input.send_keys('myuser')
-        self.selenium.find_element_by_xpath('//button[@value="Submit"]').click()
+        username = self.selenium.find_element_by_name('username')
+        username.send_keys('bennylope')
+        self.selenium.find_element_by_name('submit').click()
+
+    def test_form_validation(self):
+        """Validate the form with JavaScript"""
+        self.selenium.get('%s%s' % (self.live_server_url, '/'))
+        first_name = self.selenium.find_element_by_name('first_name')
+        first_name.send_keys('ben')
+        last_name = self.selenium.find_element_by_name('last_name')
+        last_name.send_keys('lopatin')
+        self.selenium.find_elements(By.XPATH, "//input[@value='benlopatin']")
 

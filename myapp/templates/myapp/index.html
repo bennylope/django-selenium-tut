@@ -1,4 +1,25 @@
-<form action="." method="POST">{% csrf_token %}
-    {{ form }}
-    <button type="submit">Submit</button>
-</form>
+<html>
+    <head>
+        <title>Let's make some testing</title>
+    </head>
+    <body>
+        <form action="." method="POST" id="registration">{% csrf_token %}
+            {{ form }}
+            <button name="submit" type="submit">Submit</button>
+        </form>
+        <script src="{{ STATIC_URL }}jquery.js" type="text/javascript"></script>
+        <script src="{{ STATIC_URL }}jquery.validate.js" type="text/javascript"></script>
+        <script>
+            $(document).ready(function() {
+                // propose username by combining first- and lastname
+                $("#username").focus(function() {
+                    var firstname = $("#firstname").val();
+                    var lastname = $("#lastname").val();
+                    if(firstname && lastname && !this.value) {
+                        this.value = firstname + lastname;
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
