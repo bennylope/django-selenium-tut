@@ -4,17 +4,20 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.webdriver import WebDriver
 
 
-class MySeleniumTests(LiveServerTestCase):
+class SeleniumTestCase(LiveServerTestCase):
 
     @classmethod
     def setUpClass(cls):
         cls.selenium = WebDriver()
-        super(MySeleniumTests, cls).setUpClass()
+        super(SeleniumTestCase, cls).setUpClass()
 
     @classmethod
     def tearDownClass(cls):
-        super(MySeleniumTests, cls).tearDownClass()
+        super(SeleniumTestCase, cls).tearDownClass()
         cls.selenium.quit()
+
+
+class MyAppTests(SeleniumTestCase):
 
     def test_form(self):
         self.selenium.get('%s%s' % (self.live_server_url, '/'))
